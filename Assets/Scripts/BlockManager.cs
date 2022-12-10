@@ -8,12 +8,8 @@ public class BlockManager : MonoBehaviour
     Block[] childrens;
     private void OnEnable()
     {
-        childrens = GetComponentsInChildren<Block>(true);
-        foreach(Block child in childrens)
-        {
-            AddBlock(child);
-        }
-
+        childrens = new Block[0];
+        OnGamePlayState(GamePlayState.Ready);
         GamePlayManager.instance.OnGamePlayState += OnGamePlayState;
     }
 
@@ -28,16 +24,21 @@ public class BlockManager : MonoBehaviour
     public void RemoveBlock()
     {
         blockCount--;
-        if (blockCount == 0) GamePlayManager.instance.GamePlayState = GamePlayState.Won;
+        if (blockCount == 0 && GamePlayManager.instance.GamePlayState == GamePlayState.Playing) GamePlayManager.instance.GamePlayState = GamePlayState.Won;
     }
 
     public void OnGamePlayState(GamePlayState gamePlayState)
     {
         if (gamePlayState == GamePlayState.Ready)
         {
-            blockCount = 0;
             foreach (Block block in childrens)
+            {
+                block.gameObject.SetActive(false);
                 block.gameObject.SetActive(true);
+            }
+            blockCount = 0;
+            childrens = GetComponentsInChildren<Block>(true);
+            foreach (Block child in childrens) AddBlock(child);
         }
 
     }

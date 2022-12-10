@@ -7,6 +7,7 @@ public class GamePlayManager : MonoBehaviour
 {
 
     public static GamePlayManager instance;
+    public GameObject blockManager;
     public Transform ball, player;
     public CountDown countDownWindow;
     public WinWindow winWindow;
@@ -21,7 +22,16 @@ public class GamePlayManager : MonoBehaviour
         else if(GamePlayManager.instance != this) Destroy(this.gameObject);
     }
 
-    private void OnEnable() => GamePlayState = GamePlayState.Ready;
+    private void OnEnable()
+    {
+        Awake();
+
+        GamePlayState = GamePlayState.Ready;
+
+        blockManager.SetActive(true);
+        ball.gameObject.SetActive(true);
+        player.gameObject.SetActive(true);
+    }
 
     public GamePlayState GamePlayState { 
         get { 
@@ -50,9 +60,9 @@ public class GamePlayManager : MonoBehaviour
 
     public void ResetWindows()
     {
-        countDownWindow.gameObject.SetActive(false);
-        winWindow.gameObject.SetActive(false);
-        gameOverWindow.gameObject.SetActive(false);
+        if (countDownWindow != null) countDownWindow.gameObject.SetActive(false);
+        if (winWindow != null) winWindow.gameObject.SetActive(false);
+        if (gameOverWindow != null) gameOverWindow.gameObject.SetActive(false);
     }
 
 }

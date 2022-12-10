@@ -6,6 +6,7 @@ using TMPro;
 public class WinWindow : MonoBehaviour
 {
     [SerializeField] TMP_Text text;
+    [SerializeField] ParticleSystem particlesSystem;
 
     bool listen = false;
     float timeCount = 2;
@@ -16,6 +17,7 @@ public class WinWindow : MonoBehaviour
         timeCount = 2;
         if (text != null) text.text = "Won";
         StartCoroutine(StartCountDown());
+        particlesSystem.Play();
     }
 
     private void Start()

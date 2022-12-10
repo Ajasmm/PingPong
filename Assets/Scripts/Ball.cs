@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -9,7 +10,9 @@ public class Ball : MonoBehaviour
 
 
     float currentSpeed;
+
     Vector2 movementDirection;
+    float dot;
 
     Vector3 startPos;
 
@@ -34,7 +37,24 @@ public class Ball : MonoBehaviour
 
     private void OnDisable() => GamePlayManager.instance.OnGamePlayState -= OnGamePlayChange;
 
-    private void FixedUpdate() => rBody.velocity = rBody.velocity.normalized * currentSpeed;
+    private void FixedUpdate()
+    {
+        movementDirection = rBody.velocity.normalized;
+        dot = Vector3.Dot(Vector3.right, movementDirection);
+
+        if(dot > 0.5F || dot < -0.5)
+        {
+            if (movementDirection.y >= 0)
+                movementDirection.y = 1F;
+            else
+                movementDirection.y = -1F;
+
+            movementDirection.Normalize();
+            rBody.velocity = movementDirection;
+        }
+
+        rBody.velocity = rBody.velocity.normalized * currentSpeed;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
