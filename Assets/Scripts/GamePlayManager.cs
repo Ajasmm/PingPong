@@ -7,6 +7,8 @@ public class GamePlayManager : MonoBehaviour
 {
 
     public static GamePlayManager instance;
+
+
     public GameObject blockManager;
     public Transform ball, player;
     public CountDown countDownWindow;

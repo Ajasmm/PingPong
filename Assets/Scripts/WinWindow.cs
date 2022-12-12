@@ -7,6 +7,7 @@ public class WinWindow : MonoBehaviour
 {
     [SerializeField] TMP_Text text;
     [SerializeField] ParticleSystem particlesSystem;
+    [SerializeField] AudioSource audio_Source;
 
     bool listen = false;
     float timeCount = 2;
@@ -18,6 +19,12 @@ public class WinWindow : MonoBehaviour
         if (text != null) text.text = "Won";
         StartCoroutine(StartCountDown());
         particlesSystem.Play();
+        audio_Source.Play();
+    }
+
+    private void OnDisable()
+    {
+        audio_Source.Stop();
     }
 
     private void Start()

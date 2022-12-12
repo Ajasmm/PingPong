@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameOverWindow : MonoBehaviour
 {
     [SerializeField] TMP_Text text;
-
+    [SerializeField] AudioSource audio_Source;
     bool listen = false;
     float timeCount = 2;
 
@@ -17,6 +17,12 @@ public class GameOverWindow : MonoBehaviour
         timeCount = 2;
         if (text != null) text.text = "GameOver";
         StartCoroutine(StartCountDown());
+       audio_Source.Play();
+    }
+
+    private void OnDisable()
+    {
+        audio_Source.Stop();
     }
 
     private void Start()
