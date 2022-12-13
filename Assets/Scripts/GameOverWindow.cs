@@ -22,7 +22,7 @@ public class GameOverWindow : MonoBehaviour
 
     private void OnDisable()
     {
-        audio_Source.Stop();
+        audio_Source.Stop();    
     }
 
     private void Start()
