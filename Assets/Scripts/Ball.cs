@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
